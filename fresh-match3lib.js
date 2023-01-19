@@ -16,7 +16,8 @@ window.onload = function() {
         tiles: [],      // The two-dimensional tile array
         score: 0,
         colorInPlay: -1, // positive - tileColor when clicked
-        totalTurns: 0
+        totalTurns: 0,
+        totalScore: 0
     };
 
     var thisTurn = {
@@ -441,6 +442,7 @@ window.onload = function() {
                    activeCheckNeighbors();  
                    eraseMarkedPieces(); 
                    fallDownPieces();  
+                   replenishTiles();
                    console.log(`total marked erased pieces ${thisTurn.totalErasedTiles}`); // erased tiles per turn
                    resetTurn(); 
                 }
@@ -635,10 +637,6 @@ window.onload = function() {
     // zaps specific tile
     function zap1_1_tile(){
         console.log(`running debug function`);
-        level.tiles[1][1].killTile(); // poisons
-        eraseMarkedPieces(); 
-        fallDownPieces(); 
-        drawTheGrid();
     }
     
 
@@ -746,6 +744,23 @@ window.onload = function() {
         
     }     
  
+
+    // fresh tiles
+    function replenishTiles()
+    {
+        var replenishedTiles = 0;
+        console.log(`filling erased tiles`);
+        for (let row = 0; row < TOTALROWS; row++) {
+            for (let column = 0; column < TOTALCOLUMNS; column++) {
+                if (level.tiles[column][row].tileType == 0)
+                {           
+                    level.tiles[column][row].Regenerate();
+                }
+            }
+        }          
+        console.log(`replenished tiles: ${replenishedTiles}`);
+    }
+
 
     // primary entry point
     init();
