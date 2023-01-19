@@ -97,6 +97,7 @@ window.onload = function() {
         // mark tile for potential deletion
         markTile()   {
             this.markedTile = true;
+            drawXonTile(self.column,self.row);
         }
 
 
@@ -253,7 +254,17 @@ window.onload = function() {
         //console.log(`drawing tile; ${col} ${row} type${thisTile.tileType}`);
         if (level.tiles[column][row].tileType == 0){
             context.fillStyle = BACKGROUNDCOLOR; //  
-            context.fillRect(myCoordinates.tilex + 2, myCoordinates.tiley + 2, TILEWIDTH - 4, TILEHEIGHT - 4); 
+            context.fillRect(myCoordinates.tilex + 2, myCoordinates.tiley + 2, TILEWIDTH - 4, TILEHEIGHT - 4);
+            // practice drawing x
+            // context.fillStyle = "black";
+            // context.beginPath(); // draw X
+            // context.moveTo(myCoordinates.tilex , myCoordinates.tiley );
+            // context.lineTo(myCoordinates.tilex + 40, myCoordinates.tiley + 40); // right
+            // context.stroke();
+            // context.beginPath();
+            // context.moveTo(myCoordinates.tilex  +40, myCoordinates.tiley );
+            // context.lineTo(myCoordinates.tilex  , myCoordinates.tiley + 40);
+            // context.stroke();            
         }
 
         else if (level.tiles[column][row].tileType   == 1)  
@@ -266,6 +277,20 @@ window.onload = function() {
             console.log('bomb');
         }
 
+    }
+
+    function drawXonTile(column,row){
+        //console.log(`drawing x`);
+        var myCoordinates = getTileCoordinate(column, row, 6, 3);     
+        context.fillStyle = "black";
+        context.beginPath(); // draw X
+        context.moveTo(myCoordinates.tilex , myCoordinates.tiley );
+        context.lineTo(myCoordinates.tilex + 40, myCoordinates.tiley + 40); // right
+        context.stroke();
+        context.beginPath();
+        context.moveTo(myCoordinates.tilex  +40, myCoordinates.tiley );
+        context.lineTo(myCoordinates.tilex  , myCoordinates.tiley + 40);
+        context.stroke();  
     }
 
 
@@ -368,23 +393,47 @@ window.onload = function() {
         thisTurn.foundanyNeighbor = false;    
         pasvFoundMatches = 0;     
         thisTurn.markedNeighbors = 0; 
+        clearAllMarks(); 
     }
 
-
+    // clear marked attribute from all tiles
+    //
+    function clearAllMarks(){
+        for (let row = 0; row < TOTALROWS; row++) {            
+            for (let column = 0; column < TOTALCOLUMNS; column++) {
+                level.tiles[column][row].markedTile = false;
+            }
+        }
+    }
+    
+    function tilesForColor(myColor){
+        let foundCounter = 0; 
+        for (let row = 0; row < TOTALROWS; row++) {            
+            for (let column = 0; column < TOTALCOLUMNS; column++) {
+                if (level.tiles[column][row].tileColor == myColor){
+                    foundCounter+=1;
+                }
+            }
+        }
+        return foundCounter;
+    }
 
     // THE BIG TURN
     // 
     function PlayTileTurn(column,row){
-        console.log(`playing tile ${column},${row}`);  
+        console.log(`playing tile ${column},${row}`);          
         if (level.tiles[column][row].tileType == 1) // works
         {
+            
             thisTurn.colorInPlay = level.tiles[column][row].tileColor
-            checkNeighbors(column,row,false); 
+            console.log(`total tiles for color ${thisTurn.colorInPlay} is ${tilesForColor(thisTurn.colorInPlay)}`);
+            if ( checkNeighbors(column,row,false) == true)  // OOPS!
+            {
             if (thisTurn.markedNeighbors>0){
                 console.log(`found matched tiles, erasing`);
                 if (checkNeighbors(column,row,true))
                 {
-                   recursiveCheckNeighbors();  
+                   activeCheckNeighbors();  
                    eraseMarkedPieces(); 
                    fallDownPieces();  
                    resetTurn(); 
@@ -395,6 +444,7 @@ window.onload = function() {
                 console.log(`no marked neighbors found`);
             }
         }
+        }
         else
         {
             console.log('non-tile clicked(future expansion)');
@@ -404,12 +454,12 @@ window.onload = function() {
     }
 
     // now find neigboring tiles we haven't found yet
-    function recursiveCheckNeighbors(){
-        var recrFoundTiles = 0; // private counter 
-        console.log(`recursive check neighbors`);
+    // TODO: better
+    function activeCheckNeighbors(){
+        //console.log(`recursive check neighbors`);
         for (let row = 0; row < TOTALROWS; row++) {            
             for (let column = 0; column < TOTALCOLUMNS; column++) {
-                console.log(` RCR: ${column}${row}`);
+                //console.log(` RCR: ${column}${row}`);
                 if (level.tiles[column][row].tileColor == thisTurn.colorInPlay && 
                     level.tiles[column][row].markedTile == true)
                     {     
@@ -417,10 +467,20 @@ window.onload = function() {
                     }
             }
         }     
-        console.log(`recrfoundtiles: ${recrFoundTiles}`);
 
+        // now, recheck the already-marked neighbors for neighbors
+        for (let row = 0; row < TOTALROWS; row++) {                    
+        for (let column = 0; column < TOTALCOLUMNS; column++) {
+            //console.log(` RCR: ${column}${row}`);
+            if (level.tiles[column][row].tileColor == thisTurn.colorInPlay && 
+                level.tiles[column][row].markedTile == true)                        
+                {
+                    checkNeighbors(column,row,true);
+                }
+            }
+        }
+        console.log(`total marked neighbors ${thisTurn.markedNeighbors}`); // way high(2 ends up as 6?)
     }
-
 
 
 
@@ -429,6 +489,7 @@ window.onload = function() {
     // deterines if it is a valid move
     // just 1-square NESW match
     function checkNeighbors(column,row,active){
+        if (active) {level.tiles[column][row].markTile();}  // mark self tile
         //console.log(`pasv: ${col},${row}   color/type seeking: ${tilecolors[level.tiles[col][row].tileColor]}`); 
         var foundAnyNeighbor = false;
         if (column==0) // left edge case
@@ -456,7 +517,7 @@ window.onload = function() {
            }
         if  (column==TOTALCOLUMNS-1)  // right edge case(double check this)
         {
-            console.log('rightmost edge case');
+            //console.log('rightmost edge case');
             if ( checkWestNeighbor(column,row,active))
             {
                 thisTurn.markedNeighbors+=1;
@@ -468,7 +529,7 @@ window.onload = function() {
         // topmost, south match only
         if (row==0)
         {
-            console.log(`topmost row`);
+            //console.log(`topmost row`);
             if ( checkSouthNeighbor(column,row,active))            
             {                   
                 thisTurn.markedNeighbors+=1;
@@ -493,7 +554,7 @@ window.onload = function() {
         }
         else if  (row==TOTALROWS-1) // bottom edge case
         {
-            console.log(`bottom edge case`);
+            //console.log(`bottom edge case`);
             if (checkNorthNeighbor(column,row,active))            
             {                   
                 thisTurn.markedNeighbors+=1;
@@ -507,11 +568,7 @@ window.onload = function() {
         {
             console.log(`no matches found`);
         }
-        else{
-            // mark self-tile as marked
-            if (active) {level.tiles[column][row].markTile();} 
-        }
-        console.log(`this turn's marked neighbors ${thisTurn.markedNeighbors}`); // works()
+        //console.log(`this turn's marked neighbors ${thisTurn.markedNeighbors}`); // works()
         return foundAnyNeighbor; 
     }
 
@@ -630,18 +687,18 @@ window.onload = function() {
     }
 
     // can use for redraw
-    // 
+    // temporarily disabling
     function destroyColumn(column){
         //console.log(`destroying column ${column}`);
         for (var thisRow = 0; thisRow<TOTALROWS; thisRow++){
             level.tiles[column][thisRow].tileType = 0;
             drawTile(column,thisRow);
         }
-        //redrawColumn(column);
+        redrawColumn(column);
     }
 
     function redrawColumn(column){
-        console.log(`redrawing column ${column}`);
+        //console.log(`redrawing column ${column}`);
         for (var thisRow = 0; thisRow<TOTALROWS-1; thisRow++){
             drawTile(column,thisRow);  
         }    
