@@ -27,6 +27,7 @@ window.onload = function() {
         clickedTileRow: -1,
         foundMatchedTiles: 0,
         totalErasedTiles: 0,
+        otherMarkedTiles: 0, // better?
         foundanyNeighbor: false
     }
 
@@ -91,6 +92,7 @@ window.onload = function() {
             this.tileType = 0; 
             this.tileColor = -1;
             this.markedTile = true; // might need to change later
+            level.totalErasedTiles +=1;
             //console.log(`&&  tile ${this.column},${this.row} erased`); 
         }
 
@@ -98,6 +100,7 @@ window.onload = function() {
         markTile()   {
             this.markedTile = true;
             drawXonTile(self.column,self.row);
+            thisTurn.otherMarkedTiles+=1;
         }
 
 
@@ -393,6 +396,8 @@ window.onload = function() {
         thisTurn.foundanyNeighbor = false;    
         pasvFoundMatches = 0;     
         thisTurn.markedNeighbors = 0; 
+        thisTurn.otherMarkedTiles = 0;
+        thisTurn.totalErasedTiles =0;
         clearAllMarks(); 
     }
 
@@ -436,6 +441,7 @@ window.onload = function() {
                    activeCheckNeighbors();  
                    eraseMarkedPieces(); 
                    fallDownPieces();  
+                   console.log(`total marked erased pieces ${thisTurn.totalErasedTiles}`); // erased tiles per turn
                    resetTurn(); 
                 }
             }
@@ -448,7 +454,7 @@ window.onload = function() {
         else
         {
             console.log('non-tile clicked(future expansion)');
-        }
+        }        
         drawTheGrid(); // refresh board
         
     }
@@ -479,7 +485,6 @@ window.onload = function() {
                 }
             }
         }
-        console.log(`total marked neighbors ${thisTurn.markedNeighbors}`); // way high(2 ends up as 6?)
     }
 
 
