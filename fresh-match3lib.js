@@ -415,7 +415,6 @@ window.onload = function() {
                 }
             }
         }
-        console.log(`total tiles for color ${myColor} is ${foundCounter}`);
         return foundCounter;
     }
 
@@ -425,9 +424,11 @@ window.onload = function() {
         console.log(`playing tile ${column},${row}`);          
         if (level.tiles[column][row].tileType == 1) // works
         {
+            
             thisTurn.colorInPlay = level.tiles[column][row].tileColor
-
-            checkNeighbors(column,row,false);  // OOPS!
+            console.log(`total tiles for color ${thisTurn.colorInPlay} is ${tilesForColor(thisTurn.colorInPlay)}`);
+            if ( checkNeighbors(column,row,false) == true)  // OOPS!
+            {
             if (thisTurn.markedNeighbors>0){
                 console.log(`found matched tiles, erasing`);
                 if (checkNeighbors(column,row,true))
@@ -442,6 +443,7 @@ window.onload = function() {
             {
                 console.log(`no marked neighbors found`);
             }
+        }
         }
         else
         {
