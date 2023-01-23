@@ -1,0 +1,13 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url(chakraPetch-bold.ttf);
+    size: 16px;
+}
+  
+/* TODO: add in MicrogrammaDExtendedBold.otf */
+
+h2 {
+    font-family: myFirstFont;
+    color: rgb(230, 24, 106);
+    size: 24px;
+}
