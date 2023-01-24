@@ -424,6 +424,7 @@ window.onload = function() {
         return foundCounter;
     }
 
+    
     // THE BIG TURN
     // 
     function PlayTileTurn(column,row){
