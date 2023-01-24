@@ -1,0 +1,104 @@
+<html>
+<script src="spinnercore.js"></script>
+<style type="text/css">
+
+    .tg td-reddy {
+        background-color: #ff0000;
+        font-size: 14px;
+        padding: 15px 15px;
+        height: 20;
+    }
+
+    .tg td-off {
+        background-color: #ffffff;
+        font-size: 14px;
+        padding: 15px 15px;
+        height: 20;
+    }
+
+    .blue {
+        background: blue;
+    }
+
+    .red {
+        background: red;
+        background-color: #ff0000;
+    }
+
+
+    .white {
+        background: white;
+        background-color: #ffffff;
+    }
+
+
+.tg  {border-collapse:collapse;
+border-spacing:0;}
+
+.tg td{border-color:black;border-style:solid;border-width:1px;
+font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+
+.tg th{border-color:black;border-style:solid;
+    border-width:1px;
+    font-family:Arial, sans-serif;
+    font-size:14px;
+      font-weight:normal;
+    overflow:hidden;
+    padding:10px 5px;
+    word-break:normal;
+    }
+
+.tg .tg-idee{font-family:Impact, Charcoal, sans-serif !important;text-align:center;vertical-align:top}
+
+.tg .tg-baqh{text-align:center;vertical-align:top}
+
+.tg .tg-rfs4{background-color:#ffffff;border-color:#000000;color:#000000;font-family:Impact, Charcoal, sans-serif !important;
+  text-align:center;vertical-align:top}
+
+@media screen and (max-width: 767px) {.tg {width: auto !important;}.tg col {width: auto !important;}.tg-wrap {overflow-x: auto;-webkit-overflow-scrolling: touch;}}
+</style>
+
+<div class="tg-wrap">
+<table class="tg">
+<tbody>
+  <tr>
+    <td class="tg-idee"></td>
+    <td class="tg-idee">col1</td>
+    <td class="tg-idee">col2</td>
+    <td class="tg-idee">col3</td>
+    <td class="tg-idee"></td>
+  </tr>
+  <tr>
+    <td class="tg-idee">row1</td>
+    <td class="tg-idee" id="val1">1</td>
+    <td class="tg-idee" id="val2">2</td>
+    <td class="tg-idee" id="val4">4</td>
+    <td class="tg-idee" id="total1">ttl</td>
+  </tr>
+  <tr>
+    <td class="tg-idee">row2</td>
+    <td class="tg-idee" id="val8">8</td>
+    <td class="tg-idee" id="val16">16</td>
+    <td class="tg-idee" id="val32">32</td>
+    <td class="tg-idee" id="total2">ttl</td>
+  </tr>
+  <tr>
+    <td class="tg-idee">row3</td>
+    <td class="white" id="val64">64</td>
+    <td class="white" id="val128">128</td>
+    <td class="white" id="val256">256</td>
+    <td class="tg-idee" id="total3">ttl</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh"></td>
+    <td class="tg-baqh" id="bottomtotal1">ttl</td>
+    <td class="tg-baqh" id="bottomtotal2">ttl</td>
+    <td class="tg-baqh" id="bottomtotal3">ttl</td>
+    <td class="tg-baqh" ></td>
+  </tr>
+</tbody>
+</table></div>
+<p><button id="startButton" onclick="startCounter()">START</button> </p>
+<p><button id="stopButton" onclick="stopCounter()">STOP</button> </p>
+</html>

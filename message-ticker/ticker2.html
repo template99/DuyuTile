@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body{
+  margin: 0 auto;
+}
+.ticker-container {
+  background: tomato;
+    width: 100%;
+    overflow: hidden;
+  margin: 0 auto;
+}
+.ticker-text {
+    height: 150%;
+  color: #fafafa;
+  white-space:nowrap;
+  display:inline-block;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+}
+    </style>
+    <script src="/scripts/snippet-javascript-console.min.js?v=1"></script>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<div class = "ticker-container">
+    <div class = "ticker-text">
+    <h3>Hello! Welcome to my website. This is message 2 This is message 3</h3>
+    </div>
+</div>
+<button onclick="toggleDirection();">Change direction</button>
+    <script type="text/javascript">
+        var width, containerwidth, left, way = 0;
+
+$(document).ready(function(e){
+
+  width = $('.ticker-text').width();
+  containerwidth = $('.ticker-container').width();
+  left = containerwidth;
+  tick();
+});
+
+function tick_old() {
+  if (way) {
+    if (--left < -width){
+      left = containerwidth;
+    }
+  } else {
+    if (++left > containerwidth){
+      left = -width;
+     }
+  }
+  $(".ticker-text").css("margin-left", left + "px");
+  setTimeout(tick, 8);
+}
+
+function tick() {
+  {
+    if (++left > containerwidth){
+      left = -width;
+     }
+  }
+  $(".ticker-text").css("margin-left", left + "px");
+  setTimeout(tick, 8);
+}
+
+
+
+function toggleDirection () {
+  way = (way+1)%2;
+}
+    </script>
+</body>
+</html>
