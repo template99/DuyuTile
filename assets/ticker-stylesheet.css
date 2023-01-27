@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Microgramma D';
+    src: url('MicrogrammaD-BoldExte.woff2') format('woff2'),
+        url('MicrogrammaD-BoldExte.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
