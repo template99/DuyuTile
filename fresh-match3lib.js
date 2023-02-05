@@ -253,7 +253,10 @@ window.onload = function() {
     }
 
 
+
+
     function drawTile(column,row){
+        console.log('drawing shouldnt see this');
         var myCoordinates = getTileCoordinate(column, row, 6, 3);     
         //console.log(`drawing tile; ${col} ${row} type${thisTile.tileType}`);
         if (level.tiles[column][row].tileType == 0){
