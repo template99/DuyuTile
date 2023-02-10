@@ -8,35 +8,17 @@ window.onload = function() {
     var canvas = document.getElementById("viewport");
     var context = canvas.getContext("2d");
 
-    // stuff everything into here
-    var gameCore = {
-        animationState : 0,
-        delayTime : 0
-    }
 
     var Buttons = [ { x: 30, y: 210, width: 120, height: 40, text: "New Game"},
     { x: 30, y: 240, width: 120, height: 40, text: "Zap tile 1,1"},    
     { x: 30, y: 280, width: 120, height: 40, text: "Refresh tiles"}];  
 
 
-    // setInterval(() => {
-                
-    // }, interval);    
-
-    // maybe put drawing functions
-    // in a queue?
-    setInterval(function() {
-        // any code here or call a funciton
-        //console.log('test timer') 
-        }, 20000);
-
     // run main init here
 
         // ENTRY POINT
         function init()
         {   
-            // EXPERIMENTAL
-            //clearInterval();
             gameState = gameStates.init; 
             console.clear(); 
             console.log("MAIN INIT");

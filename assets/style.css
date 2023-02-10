@@ -11,3 +11,28 @@ h2 {
     color: rgb(230, 24, 106);
     size: 24px;
 }
+
+/**
+ * Ticker, works, but doesn't do a continious repeat scrolling
+ */
+
+ .page-head__ticker {
+    font-family: "Arial";
+    font-size: 20px;
+    font-weight: Bold;
+    height: 100pct;
+    line-height: 1;
+    padding: 0 5px;
+    text-transform: none;
+    overflow: hidden;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(-50%, 0);
+      /* changed from 100% */
+    }
+  }
