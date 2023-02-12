@@ -20,7 +20,7 @@ window.onload = function() {
         function init()
         {   
             gameState = gameStates.init; 
-            console.clear(); 
+            //console.clear(); 
             console.log("MAIN INIT");
             canvas.addEventListener("mousedown", onMouseDown);  
             canvas.addEventListener("onkeydown",onKeyDown);
